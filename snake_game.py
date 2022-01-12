@@ -23,7 +23,7 @@ BLUE2 = (0, 100, 255)
 BLACK = (0, 0, 0)
 
 BLOCK_SIZE = 20
-SPEED = 40
+SPEED = 10
 
 
 class SnakeGame:
@@ -78,16 +78,21 @@ class SnakeGame:
 
         # 3. check if game over
         game_over = False
-        if self.is_collision(self):
+        if self.is_collision():
             game_over = True
             return game_over, self.score
 
         # 4. place new food or just move
-
+        if self.head == self.food:
+            self.score += 1
+            self.place_food()
+        else: 
+            self.snake.pop()
 
         # 5. update ui and clock
         self.update_ui()
         self.clock.tick(SPEED)
+
         # 6. return game over and score
         return game_over, self.score
 
