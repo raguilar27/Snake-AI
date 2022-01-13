@@ -82,7 +82,19 @@ class Agent:
         self.trainer.train_step(state, action, reward, next_state, done)
 
     def get_action(self, state):
-        pass
+        # random moves: tradeoff exploration / exploitation
+        self.epsilon = 80 - self.n_games  # can change 80 to see different results
+        final_move = [0, 0, 0]
+        # smaller epsilon means less frequent random moves occur
+        if random.randint(0, 200) < self.epsilon:
+            move = random.randint(0, 2)
+            final_move[move] = 1
+        else:
+            state0 = torch.tensor(state, dtype=torch.float)
+            prediction = self.model.predict(state0)
+            move = torch.argmax(prediction).item()
+
+        return final_move
 
 
 def train():
