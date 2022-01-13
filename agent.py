@@ -38,7 +38,7 @@ def train():
     plot_scores = []
     plot_mean_scores = []
     total_score = 0
-    best_score = 0
+    record = 0
     agent = Agent()
     game = SnakeGameAI()
 
